@@ -5,30 +5,38 @@
  */
 package interfaces;
 
-import java.util.Arrays;
-import java.util.stream.IntStream;
 import javax.swing.table.DefaultTableModel;
+import java.lang.Math;
+import java.util.ArrayList;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
  * @author Dilantha
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    int rowCount;
+    int columnCount;
+    ArrayList<String> subjects = new ArrayList<>();
     /**
      * Creates new form MainWindow
      */
     DefaultTableModel table;
+    DefaultTableModel table2;
     public MainWindow() {
         initComponents();
         this.setExtendedState(MainWindow.MAXIMIZED_BOTH);
         jtable.setVisible(false);
+        jtable2.setVisible(false);
         buttonSave.setEnabled(false);
         buttonSubmit.setEnabled(false);
         buttonOpen.setEnabled(false);
         buttonNext.setEnabled(false);
         table=(DefaultTableModel)jtable.getModel();
+        table2=(DefaultTableModel)jtable2.getModel();
         table.setColumnCount(0);
+        table2.setColumnCount(0);
     }
 
     /**
@@ -64,17 +72,21 @@ public class MainWindow extends javax.swing.JFrame {
         chkboxSelectAll = new javax.swing.JCheckBox();
         txtNoStudents = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtable = new javax.swing.JTable();
-        buttonExit = new javax.swing.JButton();
-        buttonSubmit = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtable2 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
         buttonSave = new javax.swing.JButton();
         buttonOpen = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        buttonSubmit = new javax.swing.JButton();
+        buttonExit = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -212,14 +224,21 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(txtGrade, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(txtTeacherName, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(chkboxSelectAll))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonNext)))
+                .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(103, 103, 103)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(chkboxScience)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkboxScience)
                             .addComponent(chkboxSinhala)
                             .addComponent(chkboxBuddhism)
                             .addComponent(chkboxHistory)
@@ -227,18 +246,11 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(chkboxEnglish)
                             .addComponent(chkboxElective1)
                             .addComponent(chkboxElective2)
-                            .addComponent(chkboxElective3))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
+                            .addComponent(chkboxElective3)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(chkboxSelectAll)
-                    .addComponent(buttonNext))
-                .addGap(21, 21, 21))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,6 +306,11 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
+        jLabel4.setText("CodeSpark Software Solutions");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Marks Analyzer");
+
         jtable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -308,17 +325,61 @@ public class MainWindow extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jtable);
 
-        buttonExit.setText("Exit");
-        buttonExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonExitActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
-        buttonSubmit.setText("Submit");
-        buttonSubmit.addActionListener(new java.awt.event.ActionListener() {
+        jTabbedPane1.addTab("Overall", jPanel3);
+
+        jtable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jtable2);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("tab2", jPanel4);
+
+        jButton2.setText("New");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSubmitActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -333,49 +394,19 @@ public class MainWindow extends javax.swing.JFrame {
 
         jButton1.setText("Clear All");
 
-        jButton2.setText("New");
+        buttonSubmit.setText("Submit");
+        buttonSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSubmitActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonOpen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonSubmit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonExit)))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonExit)
-                    .addComponent(buttonSubmit)
-                    .addComponent(buttonSave)
-                    .addComponent(buttonOpen)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(25, 25, 25))
-        );
-
-        jLabel4.setText("CodeSpark Software Solutions");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Marks Analyzer");
+        buttonExit.setText("Exit");
+        buttonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExitActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -392,15 +423,29 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonSave)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonOpen)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonSubmit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonExit))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel4)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -412,8 +457,16 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 13, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(buttonSave)
+                            .addComponent(buttonOpen)
+                            .addComponent(jButton1)
+                            .addComponent(buttonSubmit)
+                            .addComponent(buttonExit))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addContainerGap())
@@ -570,66 +623,181 @@ public class MainWindow extends javax.swing.JFrame {
         buttonNext.setEnabled(false);
         jtable.setVisible(true);
         buttonSubmit.setEnabled(true);
-        table.setRowCount(2);
+        rowCount = 4;
+        table.setRowCount(rowCount);
         table.addColumn("Name");
         if (chkboxScience.isSelected()) {
             table.addColumn("Science");
+            subjects.add("Science");
         }
         if (chkboxSinhala.isSelected()) {
             table.addColumn("Sinhala");
+            subjects.add("Sinhala");
         }
         if (chkboxBuddhism.isSelected()) {
             table.addColumn("Buddhism");
+            subjects.add("Buddhism");
         }
         if (chkboxHistory.isSelected()) {
             table.addColumn("History");
+            subjects.add("History");
         }
         if (chkboxMathematics.isSelected()) {
             table.addColumn("Mathematics");
+            subjects.add("Mathematics");
         }
         if (chkboxEnglish.isSelected()) {
             table.addColumn("English");
+            subjects.add("English");
         }
         if (chkboxElective1.isSelected()) {
-            table.addColumn("Elective1");
+            table.addColumn("Elective 1");
+            subjects.add("Elective 1");
         }
         if (chkboxElective2.isSelected()) {
-            table.addColumn("Elective2");
+            table.addColumn("Elective 2");
+            subjects.add("Elective 2");
         }
         if (chkboxElective3.isSelected()) {
-            table.addColumn("Elective3");
+            table.addColumn("Elective 3");
+            subjects.add("Elective 3");
         }
+        table2.setRowCount(subjects.size());
     }//GEN-LAST:event_buttonNextActionPerformed
 
     private void buttonSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSubmitActionPerformed
         try {
             jtable.getCellEditor().stopCellEditing();
         } catch (Exception e) {
-            System.out.println("");
         }
         
-        double tableData[][] = new double[jtable.getRowCount()][jtable.getColumnCount() + 2];
-        for (int i = 0; i < jtable.getRowCount(); i++) {
+        double tableData[][] = new double[rowCount][jtable.getColumnCount() + 2];
+        String names[] = new String[rowCount];
+        int count[][] = new int[subjects.size()][7];
+        for (int i = 0; i < rowCount; i++) {
+            names[i] = table.getValueAt(i, 0).toString();
             for (int j = 1; j < jtable.getColumnCount(); j++) {
-                System.out.println(table.getValueAt(i, j));
                 tableData[i][j] = Integer.parseInt(table.getValueAt(i, j).toString());
+                if (tableData[i][j] >= 0 && tableData[i][j] <= 10) {
+                    count[j - 1][0]++;
+                } 
+                if (tableData[i][j] >= 11 && tableData[i][j] <= 20) {
+                    count[j - 1][1]++;
+                } 
+                if (tableData[i][j] >= 21 && tableData[i][j] <= 30) {
+                    count[j - 1][2]++;
+                } 
+                if (tableData[i][j] >= 31 && tableData[i][j] <= 40) {
+                    count[j - 1][3]++;
+                } 
+                if (tableData[i][j] >= 41 && tableData[i][j] <= 50) {
+                    count[j - 1][4]++;
+                } 
+                if (tableData[i][j] >= 51 && tableData[i][j] <= 75) {
+                    count[j - 1][5]++;
+                } 
+                if (tableData[i][j] >= 76 && tableData[i][j] <= 100) {
+                    count[j - 1][6]++;
+                }
             }
         }
         table.addColumn("Total");
         table.addColumn("Average");
-        for (int j = 0; j < jtable.getRowCount(); j++) {
-            int columnCount = jtable.getColumnCount();
+        columnCount = jtable.getColumnCount();
+        for (int j = 0; j < rowCount; j++) {
             double temp = 0.0;
             for (int k = 1; k < columnCount - 1; k++) {
                 temp = temp + tableData[j][k];
             }
             tableData[j][columnCount - 2] = temp;
             tableData[j][columnCount - 1] = temp / (columnCount - 3);
-            table.setValueAt((int)tableData[j][columnCount - 2], j, columnCount - 2);
-            table.setValueAt(tableData[j][columnCount - 1], j, columnCount - 1);
+        }
+        
+        double temp[];
+        String tempName;
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < rowCount - 1; j++) {
+                if (tableData[j][columnCount - 1] < tableData[j + 1][columnCount - 1]) {
+                    temp = tableData[j];
+                    tableData[j] = tableData[j + 1];
+                    tableData[j + 1] = temp;
+                    tempName = names[j];
+                    names[j] = names[j + 1];
+                    names[j + 1] = tempName;
+                }
+            }
+        }
+        
+        table.addColumn("Rank");
+        for (int i = 0; i < rowCount; i++) {
+            table.setValueAt(names[i], i, 0);
+            for (int j = 1; j < columnCount - 1; j++) {
+                table.setValueAt((int)tableData[i][j], i, j);
+            }
+            table.setValueAt(Math.round(tableData[i][columnCount - 1] * 100) / 100.0, i, columnCount - 1);
+            table.setValueAt(i + 1, i, columnCount);
+        }
+        
+        /////////////////////
+        jtable2.setEnabled(true);
+        table2.addColumn("Subjects");
+        table2.addColumn("0 - 10");
+        table2.addColumn("11 - 20");
+        table2.addColumn("21 - 30");
+        table2.addColumn("31 - 40");
+        table2.addColumn("41 - 50");
+        table2.addColumn("51 - 75");
+        table2.addColumn("76 - 100");
+//        int count[][] = new int[subjects.size()][7];
+//        for (int i = 1; i < subjects.size() + 1; i++) {
+//            for (int j = 0; j < rowCount; j++) {
+//                if (tableData[i][j] >= 0 && tableData[i][j] <= 10) {
+//                    count[i - 1][0]++;
+//                } 
+//                if (tableData[i][j] >= 11 && tableData[i][j] <= 20) {
+//                    count[i - 1][1]++;
+//                } 
+//                if (tableData[i][j] >= 21 && tableData[i][j] <= 30) {
+//                    count[i - 1][2]++;
+//                } 
+//                if (tableData[i][j] >= 31 && tableData[i][j] <= 40) {
+//                    count[i - 1][3]++;
+//                } 
+//                if (tableData[i][j] >= 41 && tableData[i][j] <= 50) {
+//                    count[i - 1][4]++;
+//                } 
+//                if (tableData[i][j] >= 51 && tableData[i][j] <= 75) {
+//                    count[i - 1][5]++;
+//                } 
+//                if (tableData[i][j] >= 76 && tableData[i][j] <= 100) {
+//                    count[i - 1][6]++;
+//                } 
+//            }
+//        }
+        
+        jtable2.setVisible(true);
+        for (int i = 0; i < subjects.size(); i++) {
+            table2.setValueAt(subjects.get(i), i, 0);
+            for (int j = 1; j < 8; j++) {
+                table2.setValueAt(count[i][j - 1], i, j);
+            }
         }
     }//GEN-LAST:event_buttonSubmitActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MainWindow mW = new MainWindow();
+        mW.setVisible(true);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.updateComponentTreeUI(mW);
+        } catch (Exception e) {
+        }
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void function() {
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -658,9 +826,13 @@ public class MainWindow extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow().setVisible(true);
+        java.awt.EventQueue.invokeLater(() -> {
+            MainWindow mW = new MainWindow();
+            mW.setVisible(true);
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                SwingUtilities.updateComponentTreeUI(mW);
+            } catch (Exception e) {
             }
         });
     }
@@ -694,9 +866,13 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jtable;
+    private javax.swing.JTable jtable2;
     private javax.swing.JRadioButton radioButtonMr;
     private javax.swing.JRadioButton radioButtonMrs;
     private javax.swing.JRadioButton radioButtonMs;
